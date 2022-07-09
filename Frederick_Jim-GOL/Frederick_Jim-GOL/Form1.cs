@@ -114,10 +114,57 @@ namespace Frederick_Jim_GOL
         {
             InitializeComponent();
 
+            #region Load Settings
+            hud = Properties.Settings.Default.hud;
+            grid = Properties.Settings.Default.grid;
+            gridx10 = Properties.Settings.Default.gridx10;
+            neighborCount = Properties.Settings.Default.neighborCount;
+            gameMode = Properties.Settings.Default.gameMode;
+            timerSwitch = Properties.Settings.Default.timerSwitch;
+
+            gridColor = Properties.Settings.Default.gridColor;
+            gridx10Color = Properties.Settings.Default.gridx10Color;
+            cellColor = Properties.Settings.Default.cellColor;
+            backgroundColor = Properties.Settings.Default.backgroundColor;
+            hudColor = Properties.Settings.Default.hudColor;
+            deadCell = Properties.Settings.Default.deadCell;
+            aliveCell = Properties.Settings.Default.aliveCell;
+
+            intervals = Properties.Settings.Default.intervals;
+            worldX = Properties.Settings.Default.worldX;
+            worldY = Properties.Settings.Default.worldY;
+            seed = Properties.Settings.Default.seed;
+            #endregion
+
             // Setup the timer
-            timer.Interval = intervals; // milliseconds
+            timer.Interval = intervals; // set our interval to our intervals variable
             timer.Tick += Timer_Tick;
-            timer.Enabled = timerSwitch; // start timer running
+            timer.Enabled = timerSwitch; // set wether or not the timer is on
+
+            #region Setting Up The Window
+            graphicsPanel1.BackColor = backgroundColor; // Setting the background color
+
+            // if the timer is on, turn off the play and next button
+            // else, turn off the pause button
+            if (timerSwitch == true) { toolStripButton1.Enabled = false; toolStripButton3.Enabled = false; }
+            else toolStripButton2.Enabled = false;
+
+            // if neighborCount is true, place a check next to it under the view menu
+            if (neighborCount == true) neighborCountToolStripMenuItem.Checked = true;
+
+            // if in toroidal mode place a check on toroidal option under view
+            // else you are in finite so place a check on finite option under view
+            if (gameMode == true) toroidalToolStripMenuItem.Checked = true;
+            else finiteToolStripMenuItem.Checked = true;
+
+            if (grid == true) gridToolStripMenuItem.Checked = true; // if grid is on, place a check on the menu item under view
+            if (gridx10 == true) gridX10ToolStripMenuItem.Checked = true; // if gridx10 is on, place a check on the menu item under view
+
+            if (hud == true) HUDToolStripMenuItem.Checked = true; // if hud is on, place a check on the menu item under view
+
+            toolStripStatusLabelIntervals.Text = "Intervals = " + intervals.ToString(); // show how long it takes for the timer to tick
+            toolStripStatusLabelSeed.Text = "Seed = " + seed.ToString(); // show the starting seed
+            #endregion
         }
 
         // Calculate the next generation of cells
