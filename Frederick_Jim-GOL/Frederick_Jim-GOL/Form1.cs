@@ -437,6 +437,197 @@ namespace Frederick_Jim_GOL
                 graphicsPanel1.Invalidate();
             }
         }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e) // Save Event
+        {
+            StreamWriter writer = new StreamWriter(fileName);
+
+            // Write any comments you want to include first.
+            // Prefix all comment strings with an exclamation point.
+            // Use WriteLine to write the strings to the file. 
+            // It appends a CRLF for you.
+            writer.WriteLine($"!{DateTime.Now}");
+
+            // Iterate through the universe one row at a time.
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+
+                String currentRow = string.Empty; // Create a string to represent the current row.
+
+                for (int x = 0; x < universe.GetLength(0); x++)  // Iterate through the current row one cell at a time.
+                {
+                    if (universe[x, y] == true) currentRow += 'O';        // Alive cells == 0
+                    else if (universe[x, y] == false) currentRow += '.';  // Dead cells == .
+                }
+
+                // Once the current row has been read through and the 
+                // string constructed then write it to the file using WriteLine.
+                writer.WriteLine(currentRow);
+            }
+
+            // After all rows and columns have been written then close the file.
+            writer.Close();
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e) // Save As Event
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "All Files|*.*|Cells|*.cells";
+            dlg.FilterIndex = 2; dlg.DefaultExt = "cells";
+
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                StreamWriter writer = new StreamWriter(dlg.FileName);
+
+                // Write any comments you want to include first.
+                // Prefix all comment strings with an exclamation point.
+                // Use WriteLine to write the strings to the file. 
+                // It appends a CRLF for you.
+                writer.WriteLine($"!{DateTime.Now}");
+
+                // Iterate through the universe one row at a time.
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+
+                    String currentRow = string.Empty; // Create a string to represent the current row.
+
+                    for (int x = 0; x < universe.GetLength(0); x++)  // Iterate through the current row one cell at a time.
+                    {
+                        if (universe[x, y] == true) currentRow += 'O';         // Alive cells == Os
+                        else if (universe[x, y] == false) currentRow += '.';   // Dead cells == .s
+                    }
+
+                    // Once the current row has been read through and the 
+                    // string constructed then write it to the file using WriteLine.
+                    writer.WriteLine(currentRow);
+                }
+
+                // After all rows and columns have been written then close the file.
+                writer.Close();
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) // Exit Event
+        {
+            this.Close();
+        }
+        #endregion
+
+        #region View Menu Options
+        private void HUDToolStripMenuItem_Click(object sender, EventArgs e) // Toggle HUD Event
+        {
+            if (hud == true) // if it is on turn it off
+            {
+                hud = false;
+                graphicsPanel1.Invalidate();
+            }
+            else // if it was off turn it on
+            {
+                hud = true;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e) // Togglee Neighbor Count Event
+        {
+            if (neighborCount == true) // if it is on turn it off
+            {
+                neighborCount = false;
+                graphicsPanel1.Invalidate();
+            }
+            else // if it is off turn it on
+            {
+                neighborCount = true;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void gridToolStripMenuItem_Click(object sender, EventArgs e) // Toggle Grid Event
+        {
+            if (grid == true) // if it is on turn it off
+            {
+                grid = false;
+                graphicsPanel1.Invalidate();
+            }
+            else // if it was off turn it on
+            {
+                grid = true;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void gridX10ToolStripMenuItem_Click(object sender, EventArgs e) // Toggle gridx10 Event
+        {
+            if (gridx10 == true) // if it is on turn it off
+            {
+                gridx10 = false;
+                graphicsPanel1.Invalidate();
+            }
+            else // if it was off turn it on
+            {
+                gridx10 = true;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void toroidalToolStripMenuItem_Click(object sender, EventArgs e) // Toroidal Switch Event
+        {
+            gameMode = true;
+            finiteToolStripMenuItem.Checked = false; // uncheck finite
+            toroidalToolStripMenuItem.Checked = true; // check toroidal
+            graphicsPanel1.Invalidate(); // Don't forget always repaint
+        }
+
+        private void finiteToolStripMenuItem_Click(object sender, EventArgs e) // Finite Switch Event
+        {
+            gameMode = false;
+            toroidalToolStripMenuItem.Checked = false; // uncheck toroidal
+            finiteToolStripMenuItem.Checked = true; // check finite
+            graphicsPanel1.Invalidate(); // ALWAYS repaint
+        }
+        #endregion
+
+        #region Run Menu Options
+        private void playToolStripMenuItem_Click(object sender, EventArgs e) // Play Event
+        {
+            toolStripButton1.Enabled = false;
+            toolStripButton2.Enabled = true;
+            toolStripButton3.Enabled = false;
+            timer.Enabled = true;
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e) // Pause Event
+        {
+            toolStripButton1.Enabled = true;
+            toolStripButton2.Enabled = false;
+            toolStripButton3.Enabled = true;
+            timer.Enabled = false;
+        }
+
+        private void nextToolStripMenuItem_Click(object sender, EventArgs e) // Next Event
+        {
+            NextGeneration();
+        }
+
+        private void toToolStripMenuItem_Click(object sender, EventArgs e) // To Event
+        {
+            To dlg = new To();
+            dlg.SetGenerationStart(generations);
+
+            if (timer.Enabled != false) timer.Enabled = false;
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                toGenerations = dlg.GetGenerationJump(); // set our destination in to Generations
+                toLoopStopper = false; // turn off the loop stopper
+                timer.Enabled = true; // turn our timer on
+            }
+        }
+        #endregion
+
+        #region Randomize Menu Options
+
         #endregion
     }
 }
