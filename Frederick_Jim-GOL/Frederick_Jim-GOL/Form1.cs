@@ -171,7 +171,6 @@ namespace Frederick_Jim_GOL
         private void NextGeneration()
         {
             int count = 0; // neighbor count
-            alive = 0; // setting amount alive to 0
 
             // loop through the universe now to create the next generation
             for (int y = 0; y < universe.GetLength(1); y++)     // Iterate through the universe in the y, top to bottom
@@ -188,7 +187,6 @@ namespace Frederick_Jim_GOL
                     #region Game Rules
                     if (universe[x, y] == true)
                     {
-                        alive++;
                         if (count < 2) { sketchPad[x, y] = false; continue; } // Under-population
                         else if (count > 3) { sketchPad[x, y] = false; continue; } // Over-population
                         else if (count == 2 || count == 3) { sketchPad[x, y] = true; continue; } // Stable population
@@ -203,29 +201,54 @@ namespace Frederick_Jim_GOL
             universe = sketchPad;
             sketchPad = temp;
 
-            generations++; // Increment generation count
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString(); // Update status strip generations
+            // Increment generation count, then update the status strip
+            generations++; 
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+
+            graphicsPanel1.Invalidate(); // IInvalidate the graphics panel
         }
 
         // The event called by the timer every Interval milliseconds.
         private void Timer_Tick(object sender, EventArgs e)
         {
             NextGeneration();
+            
+            if (generations >= toGenerations && toLoopStopper == false) // if generations is greater than or equal to toGenerations & we are going to a specific generation
+            { timer.Enabled = false; toGenerations = 0; toLoopStopper = true; } // turn the timer off, set our destination to 0, & stop looking as we reached our destination
         }
 
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
         {
-            // Calculate the width and height of each cell in pixels
-            // CELL WIDTH = WINDOW WIDTH / NUMBER OF CELLS IN X
-            int cellWidth = graphicsPanel1.ClientSize.Width / universe.GetLength(0);
-            // CELL HEIGHT = WINDOW HEIGHT / NUMBER OF CELLS IN Y
-            int cellHeight = graphicsPanel1.ClientSize.Height / universe.GetLength(1);
+            alive = 0; // reset our alive varriable to 0
 
-            // A Pen for drawing the grid lines (color, width)
-            Pen gridPen = new Pen(gridColor, 1);
+            // Calculate the width and height of each cell in pixels (using a float to avoid weird border gap)
+            float cellWidth = (float)graphicsPanel1.ClientSize.Width / universe.GetLength(0);   // CELL WIDTH = WINDOW WIDTH / NUMBER OF CELLS IN X
+            float cellHeight = (float)graphicsPanel1.ClientSize.Height / universe.GetLength(1); // CELL HEIGHT = WINDOW HEIGHT / NUMBER OF CELLS IN Y
 
-            // A Brush for filling living cells interiors (color)
-            Brush cellBrush = new SolidBrush(cellColor);
+            Font hudFont = new Font("Aldhabi", 16f);          // A Font for our HUD information
+
+            Pen gridPen = new Pen(gridColor, 1);              // A Pen for drawing the grid lines (color, width)
+            Pen gridx10Pen = new Pen(gridx10Color, 3);        // A Pen for drawing the grid lines x10 (color, width)
+
+            Brush cellBrush = new SolidBrush(cellColor);     // A Brush for filling living cells interiors (color)
+            Brush deadBrush = new SolidBrush(deadCell);      // A Brush for filling in the number on dead cells
+            Brush aliveBrush = new SolidBrush(aliveCell);    // A Brush for filling in the number on alive cells
+            Brush hudBrush = new SolidBrush(hudColor);       // A Brush for fillin in the HUD
+
+            StringFormat neighborFormat = new StringFormat();  // Neighbor count alignment, places the number to the center of the cell
+            neighborFormat.Alignment = StringAlignment.Center;
+            neighborFormat.LineAlignment = StringAlignment.Center;
+
+            StringFormat hudFormat = new StringFormat(); // HUD alignment, places the hud info to the bottom left of the screen
+            hudFormat.Alignment = StringAlignment.Near;
+            hudFormat.LineAlignment = StringAlignment.Far;
+
+            // Creating the rectangle to display our hud info
+            RectangleF HUD = Rectangle.Empty;
+            HUD.X = graphicsPanel1.ClientRectangle.X;
+            HUD.Y = graphicsPanel1.ClientRectangle.Y;
+            HUD.Width = graphicsPanel1.ClientRectangle.Width;
+            HUD.Height = graphicsPanel1.ClientRectangle.Height;
 
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < universe.GetLength(1); y++)
@@ -234,26 +257,70 @@ namespace Frederick_Jim_GOL
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
                     // A rectangle to represent each cell in pixels
-                    Rectangle cellRect = Rectangle.Empty;
+                    RectangleF cellRect = Rectangle.Empty;
                     cellRect.X = x * cellWidth;
                     cellRect.Y = y * cellHeight;
                     cellRect.Width = cellWidth;
                     cellRect.Height = cellHeight;
 
-                    // Fill the cell with a brush if alive
+                    // Fill the cell with a brush if alive, incriment alive by 1
                     if (universe[x, y] == true)
                     {
                         e.Graphics.FillRectangle(cellBrush, cellRect);
+                        alive++;
                     }
 
-                    // Outline the cell with a pen
-                    e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                    if (neighborCount == true) // if neighbor count is being displayed
+                    {
+                        int neighbors = 0; // initializing a temporary neighbor checker
+
+                        if (gameMode == true) // determine which game mode we are in
+                            neighbors = CountNeighborsToroidal(x, y); // Toroidal for gameMode == true
+                        else
+                            neighbors = CountNeighborsFinite(x, y); // Finite for gameMode == false
+
+                        if (neighbors != 0) // if the cell has neighbors
+                        {
+                            if (universe[x, y] == true && neighbors == 2 || neighbors == 3) // if cell is alive and has 2 or 3 living neighbors use the alive color
+                                e.Graphics.DrawString(neighbors.ToString(), graphicsPanel1.Font, aliveBrush, cellRect, neighborFormat);
+
+                            else if (universe[x, y] == false && neighbors == 3) // if cell is dead and has exactly 3 living neighbors use the alive brush
+                                e.Graphics.DrawString(neighbors.ToString(), graphicsPanel1.Font, aliveBrush, cellRect, neighborFormat);
+
+                            else    // otherwise use the dead brush
+                                e.Graphics.DrawString(neighbors.ToString(), graphicsPanel1.Font, deadBrush, cellRect, neighborFormat);
+                        }
+                    }
+                    // grid is turned on, draw the grid
+                    if (grid == true)
+                        e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+
+                    // if gridx10 is turned on and its the end of a 10x10 block, draw the x10 grid
+                    if (gridx10 == true && x % 10 == 0 && y % 10 == 0)
+                        e.Graphics.DrawRectangle(gridx10Pen, cellRect.X, cellRect.Y, cellRect.Width * 10, cellRect.Height * 10);
                 }
             }
+            toolStripStatusLabelAlive.Text = "Alive = " + alive.ToString(); // Update status strip alive
 
-            // Cleaning up pens and brushes
-            gridPen.Dispose();
+            if (hud == true) // if hud is turned on, store the following information in hudPrint
+            {
+                hudPrint = $"Generations = {generations}";      // the generation
+                hudPrint = $"{hudPrint}\nCells Alive = {alive}";  // the number of cells alive
+                if (!gameMode) hudPrint = $"{hudPrint}\nBoundary Type: Finite"; // if gameMode is false, store the boundary type as finite
+                else hudPrint = $"{hudPrint}\nBoundary Type: Toroidal";        // else store the boundary type as toroidal
+                hudPrint = $"{hudPrint}\nUniverse Size: Width={worldX}, Height={worldY}"; // finally store the width and height of the world
+
+                e.Graphics.DrawString(hudPrint, hudFont, hudBrush, HUD, hudFormat); // display the information to the user
+            }
+
+            #region Disposing of pens and brushes
+            gridPen.Dispose();          // as the region states just disposing of the pens and brushes
+            gridx10Pen.Dispose();
             cellBrush.Dispose();
+            deadBrush.Dispose();
+            aliveBrush.Dispose();
+            hudBrush.Dispose();
+            #endregion
         }
 
         private void graphicsPanel1_MouseClick(object sender, MouseEventArgs e)
