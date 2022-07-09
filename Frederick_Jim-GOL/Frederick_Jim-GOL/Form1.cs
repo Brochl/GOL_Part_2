@@ -328,22 +328,115 @@ namespace Frederick_Jim_GOL
             // If the left mouse button was clicked
             if (e.Button == MouseButtons.Left)
             {
+                // After above math is done convert this math to floats to keep mouse clicks clean.
                 // Calculate the width and height of each cell in pixels
-                int cellWidth = graphicsPanel1.ClientSize.Width / universe.GetLength(0);
-                int cellHeight = graphicsPanel1.ClientSize.Height / universe.GetLength(1);
+                float cellWidth = (float)graphicsPanel1.ClientSize.Width / universe.GetLength(0);
+                float cellHeight = (float)graphicsPanel1.ClientSize.Height / universe.GetLength(1);
 
-                // Calculate the cell that was clicked in
-                // CELL X = MOUSE X / CELL WIDTH
-                int x = e.X / cellWidth;
-                // CELL Y = MOUSE Y / CELL HEIGHT
-                int y = e.Y / cellHeight;
+                // Calculate the cell that was clicked in                                                                                   
+                float x = (float)e.X / cellWidth;  // CELL X = MOUSE X / CELL WIDTH
+                float y = (float)e.Y / cellHeight; // CELL Y = MOUSE Y / CELL HEIGHT
 
                 // Toggle the cell's state
-                universe[x, y] = !universe[x, y];
-
+                universe[(int)x, (int)y] = !universe[(int)x, (int)y];
+               
                 // Tell Windows you need to repaint
                 graphicsPanel1.Invalidate();
             }
         }
+        #region File Menu Options
+        private void New_Click(object sender, EventArgs e) // New Event
+        {
+            for (int y = 0; y < universe.GetLength(1); y++) // Iterate through the universe in the y, top to bottom
+            {
+                for (int x = 0; x < universe.GetLength(0); x++) // Iterate through the universe in the x, left to right
+                {
+                    if (universe[x, y] != false) universe[x, y] = false; // Clean the universe 
+                }
+            }
+            generations = 0; // set generations back to zero
+
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString(); // Update status strip generations
+
+            graphicsPanel1.Invalidate(); // Invalidate to repaint everything
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e) // Open Event
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "All Files|*.*|Cells|*.cells";
+            dlg.FilterIndex = 2;
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                StreamReader reader = new StreamReader(dlg.FileName);
+
+                fileName = dlg.FileName; // store the latest file name to use for save function
+
+                // Create a couple variables to calculate the width, height, and y position
+                // of the data in the file.
+                int maxWidth = 0;
+                int maxHeight = 0;
+                int yPos = 0;
+
+                // Iterate through the file once to get its size.
+                while (!reader.EndOfStream)
+                {
+                    // Read one row at a time.
+                    string row = reader.ReadLine();
+
+                    // If the row begins with '!' then it is a comment
+                    if (row.StartsWith("!")) continue; // and should be ignored.
+
+                    // If the row is not a comment then it is a row of cells.
+                    else if (!row.StartsWith("!")) maxHeight++; // Increment the maxHeight variable for each row read.
+
+                    // Get the length of the current row string
+                    maxWidth = row.Length; // and adjust the maxWidth variable if necessary.
+                }
+
+                // Resize the current universe and scratchPad
+                // to the width and height of the file calculated above.
+                universe = new bool[maxWidth, maxHeight];
+                sketchPad = new bool[maxWidth, maxHeight];
+
+                // Reset the file pointer back to the beginning of the file.
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+
+                // Iterate through the file again, this time reading in the cells.
+                while (!reader.EndOfStream)
+                {
+                    // Read one row at a time.
+                    string row = reader.ReadLine();
+
+                    // If the row begins with '!' then it is a comment
+                    if (row.StartsWith("!")) continue; // and should be ignored.
+
+                    // If the row is not a comment then 
+                    // it is a row of cells and needs to be iterated through.
+                    for (int xPos = 0; xPos < row.Length; xPos++)
+                    {
+                        // If row[xPos] is a 'O' (capital O) then
+                        // set the corresponding cell in the universe to alive.
+                        if (row[xPos] == 'O') sketchPad[xPos, yPos] = true;
+
+                        // If row[xPos] is a '.' (period) then
+                        // set the corresponding cell in the universe to dead.
+                        else if (row[xPos] == '.') sketchPad[xPos, yPos] = false;
+                    }
+                    yPos++; // move on to the next row and continue till
+                }
+
+                // Close the file.
+                reader.Close();
+
+                // copying sketchPad to the universe then invalidating the panel
+                bool[,] temp = universe;
+                universe = sketchPad;
+                sketchPad = temp;
+                graphicsPanel1.Invalidate();
+            }
+        }
+        #endregion
     }
 }

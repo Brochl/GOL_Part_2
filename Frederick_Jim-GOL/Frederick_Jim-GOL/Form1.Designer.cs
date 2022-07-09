@@ -142,6 +142,7 @@ namespace Frederick_Jim_GOL
             this.New.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.New.Size = new System.Drawing.Size(186, 22);
             this.New.Text = "&New";
+            this.New.Click += new System.EventHandler(this.New_Click);
             // 
             // openToolStripMenuItem
             // 
@@ -151,6 +152,7 @@ namespace Frederick_Jim_GOL
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.openToolStripMenuItem.Text = "&Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
@@ -501,6 +503,7 @@ namespace Frederick_Jim_GOL
             // graphicsPanel1
             // 
             this.graphicsPanel1.BackColor = System.Drawing.SystemColors.Window;
+            this.graphicsPanel1.ContextMenuStrip = this.contextMenuStrip1;
             this.graphicsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.graphicsPanel1.Location = new System.Drawing.Point(0, 49);
             this.graphicsPanel1.Name = "graphicsPanel1";
@@ -516,7 +519,7 @@ namespace Frederick_Jim_GOL
             this.viewToolStripMenuItem1,
             this.gameplayToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 70);
             // 
             // colorToolStripMenuItem
             // 
@@ -529,7 +532,7 @@ namespace Frederick_Jim_GOL
             this.aliveNumberToolStripMenuItem,
             this.deadNumberToolStripMenuItem});
             this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
-            this.colorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.colorToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.colorToolStripMenuItem.Text = "Color";
             // 
             // backgroundColorToolStripMenuItem
@@ -582,7 +585,7 @@ namespace Frederick_Jim_GOL
             this.gridToolStripMenuItem1,
             this.gridx10ToolStripMenuItem1});
             this.viewToolStripMenuItem1.Name = "viewToolStripMenuItem1";
-            this.viewToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.viewToolStripMenuItem1.Size = new System.Drawing.Size(127, 22);
             this.viewToolStripMenuItem1.Text = "View";
             // 
             // hudToolStripMenuItem1
@@ -615,7 +618,7 @@ namespace Frederick_Jim_GOL
             this.toroidalToolStripMenuItem1,
             this.finiteToolStripMenuItem1});
             this.gameplayToolStripMenuItem.Name = "gameplayToolStripMenuItem";
-            this.gameplayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.gameplayToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.gameplayToolStripMenuItem.Text = "Gameplay";
             // 
             // toroidalToolStripMenuItem1
