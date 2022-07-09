@@ -126,11 +126,37 @@ namespace Frederick_Jim_GOL
             int count = 0; // neighbor count
             alive = 0; // setting amount alive to 0
 
-            // Increment generation count
-            generations++;
+            // loop through the universe now to create the next generation
+            for (int y = 0; y < universe.GetLength(1); y++)     // Iterate through the universe in the y, top to bottom
+            {
+                for (int x = 0; x < universe.GetLength(0); x++) // Iterate through the universe in the x, left to right
+                {
+                    #region Checking Gamemode
+                    if (gameMode == true)
+                        count = CountNeighborsToroidal(x, y); // Toroidal for gameMode == true
+                    else
+                        count = CountNeighborsFinite(x, y); // Finite for gameMode == false
+                    #endregion
 
-            // Update status strip generations
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+                    #region Game Rules
+                    if (universe[x, y] == true)
+                    {
+                        alive++;
+                        if (count < 2) { sketchPad[x, y] = false; continue; } // Under-population
+                        else if (count > 3) { sketchPad[x, y] = false; continue; } // Over-population
+                        else if (count == 2 || count == 3) { sketchPad[x, y] = true; continue; } // Stable population
+                    }
+                    else if (count == 3) { sketchPad[x, y] = true; continue; } // Reproduction
+                    #endregion
+                }
+            }
+            // copy from the sketchPad to universe
+            bool[,] temp = universe;
+            universe = sketchPad;
+            sketchPad = temp;
+
+            generations++; // Increment generation count
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString(); // Update status strip generations
         }
 
         // The event called by the timer every Interval milliseconds.
