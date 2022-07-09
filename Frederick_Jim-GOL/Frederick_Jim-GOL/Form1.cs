@@ -147,6 +147,7 @@ namespace Frederick_Jim_GOL
                         else if (count == 2 || count == 3) { sketchPad[x, y] = true; continue; } // Stable population
                     }
                     else if (count == 3) { sketchPad[x, y] = true; continue; } // Reproduction
+                    else { sketchPad[x, y] = false; continue; } // Creating a default case as a fall back
                     #endregion
                 }
             }

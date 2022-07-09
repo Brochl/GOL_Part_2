@@ -1,0 +1,10 @@
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\bin\Debug\Frederick_Jim-GOL.exe.config
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\bin\Debug\Frederick_Jim-GOL.exe
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\bin\Debug\Frederick_Jim-GOL.pdb
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.csproj.AssemblyReference.cache
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.Form1.resources
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.Properties.Resources.resources
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.csproj.GenerateResource.cache
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.csproj.CoreCompileInputs.cache
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.exe
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.pdb
