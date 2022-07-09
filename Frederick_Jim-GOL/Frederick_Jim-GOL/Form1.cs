@@ -14,6 +14,7 @@ namespace Frederick_Jim_GOL
 {
     public partial class Form1 : Form
     {
+        #region Variable creation
         bool[,] universe = new bool[20, 20]; // Creating the universe array
         bool[,] sketchPad = new bool[20, 20]; // Creating the sketchPad
 
@@ -47,21 +48,83 @@ namespace Frederick_Jim_GOL
 
         string fileName = null; // Name of the last file saved
         string hudPrint = null; // Text displayed by the hud
+        #endregion
+
+        #region Mode methods
+        private int CountNeighborsFinite(int x, int y)
+        {
+            int count = 0; // alive neighbor count
+            int xLen = universe.GetLength(0); // x length
+            int yLen = universe.GetLength(1); // y length
+
+            for (int yOffset = -1; yOffset <= 1; yOffset++)
+            {
+                for (int xOffset = -1; xOffset <= 1; xOffset++)
+                {
+                    int xCheck = x + xOffset;
+                    int yCheck = y + yOffset;
+
+                    if (xOffset == 0 && yOffset == 0) continue; // xOffset and yOffset equal 0
+
+                    if (xCheck < 0) continue; // xCheck less than 0
+
+                    if (yCheck < 0) continue; // yCheck less than 0
+
+                    if (xCheck >= xLen) continue; // xCheck greater than or equal to xLen
+
+                    if (yCheck >= yLen) continue; // yCheck greater than or equal to yLen
+
+                    if (universe[xCheck, yCheck] == true) count++; // if the cell is alive add 1 to count
+                }
+            }
+            return count;
+        }
+
+        private int CountNeighborsToroidal(int x, int y)
+        {
+            int count = 0; // alive neighbor count
+            int xLen = universe.GetLength(0); // x length
+            int yLen = universe.GetLength(1); // y length
+
+            for (int yOffset = -1; yOffset <= 1; yOffset++)
+            {
+                for (int xOffset = -1; xOffset <= 1; xOffset++)
+                {
+                    int xCheck = x + xOffset;
+                    int yCheck = y + yOffset;
+
+                    if (xOffset == 0 && yOffset == 0) continue; // xOffset & yOffset are equal to 0
+
+                    if (xCheck < 0) xCheck = xLen - 1; // xCheck is less than 0
+
+                    if (yCheck < 0) yCheck = yLen - 1; // yCheck is less than 0
+
+                    if (xCheck >= xLen) xCheck = 0; // if xCheck is greater than or equal to xLen
+
+                    if (yCheck >= yLen) yCheck = 0; // if yCheck is greater than or equal to yLen
+
+                    if (universe[xCheck, yCheck] == true) count++;
+                }
+            }
+            return count;
+        }
+        #endregion
 
         public Form1()
         {
             InitializeComponent();
 
             // Setup the timer
-            timer.Interval = 100; // milliseconds
+            timer.Interval = intervals; // milliseconds
             timer.Tick += Timer_Tick;
-            timer.Enabled = true; // start timer running
+            timer.Enabled = timerSwitch; // start timer running
         }
 
         // Calculate the next generation of cells
         private void NextGeneration()
         {
-
+            int count = 0; // neighbor count
+            alive = 0; // setting amount alive to 0
 
             // Increment generation count
             generations++;
