@@ -7,23 +7,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Threading;
 
 namespace Frederick_Jim_GOL
 {
     public partial class Form1 : Form
     {
-        // The universe array
-        bool[,] universe = new bool[5, 5];
+        bool[,] universe = new bool[20, 20]; // Creating the universe array
+        bool[,] sketchPad = new bool[20, 20]; // Creating the sketchPad
+
+        bool hud = true; // true == hud on; false == off;                                       
+        bool grid = true; // true == grid on; false == off;
+        bool gridx10 = true; // true == gridx10 on; false == off;
+        bool neighborCount = true; // true == neighbor counts on; false == off;                 
+        bool gameMode = false; // Torodial == true; Finite == false;
+        bool timerSwitch = false; // Toggles time on and off
+        bool toLoopStopper = true; // use a bool to toggle wether or not we are going to check for a difference in generation
 
         // Drawing colors
-        Color gridColor = Color.Black;
-        Color cellColor = Color.Gray;
+        Color gridColor = Color.Black; // Color of the smaller grid lines                      
+        Color gridx10Color = Color.Black; // Color of the larger grid lines                    
+        Color cellColor = Color.Black; // Color of the cell when they are alive                
+        Color backgroundColor = Color.White; // color of the background                        
+        Color hudColor = Color.Red; // Color of the hud in the bottom left hand corner    
+        Color deadCell = Color.Red; // Color of number in cell that dies/stays dead next gen   
+        Color aliveCell = Color.ForestGreen; // Color of number in cell that lives next gen
 
-        // The Timer class
-        Timer timer = new Timer();
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer(); // The Timer class
 
         // Generation count
-        int generations = 0;
+        int generations = 0; // Generation count
+        int intervals = 20; // Interval count in milliseconds
+        int worldX = 30;  // Width of the world
+        int worldY = 30; // Height of the world
+        int seed = 10;  // Randomizer seed
+        int alive = 0; // Keeps track of how many are alive
+        int toGenerations = 0; // Generations num for the to method
+
+        string fileName = null; // Name of the last file saved
+        string hudPrint = null; // Text displayed by the hud
 
         public Form1()
         {
