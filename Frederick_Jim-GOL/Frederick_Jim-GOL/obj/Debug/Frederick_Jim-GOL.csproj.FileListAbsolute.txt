@@ -8,3 +8,6 @@ C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug
 C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.csproj.CoreCompileInputs.cache
 C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.exe
 C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.pdb
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.Options.resources
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.RandomFromSeed.resources
+C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.To.resources

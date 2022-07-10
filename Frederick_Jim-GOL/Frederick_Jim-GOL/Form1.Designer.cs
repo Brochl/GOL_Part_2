@@ -311,14 +311,16 @@ namespace Frederick_Jim_GOL
             // fromSeedToolStripMenuItem
             // 
             this.fromSeedToolStripMenuItem.Name = "fromSeedToolStripMenuItem";
-            this.fromSeedToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.fromSeedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fromSeedToolStripMenuItem.Text = "From Seed";
+            this.fromSeedToolStripMenuItem.Click += new System.EventHandler(this.fromSeedToolStripMenuItem_Click);
             // 
             // fromCurrentSeedToolStripMenuItem
             // 
             this.fromCurrentSeedToolStripMenuItem.Name = "fromCurrentSeedToolStripMenuItem";
-            this.fromCurrentSeedToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.fromCurrentSeedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fromCurrentSeedToolStripMenuItem.Text = "From Current Seed";
+            this.fromCurrentSeedToolStripMenuItem.Click += new System.EventHandler(this.fromCurrentSeedToolStripMenuItem_Click);
             // 
             // fromTimeToolStripMenuItem
             // 
@@ -344,20 +346,23 @@ namespace Frederick_Jim_GOL
             // backColorToolStripMenuItem
             // 
             this.backColorToolStripMenuItem.Name = "backColorToolStripMenuItem";
-            this.backColorToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.backColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.backColorToolStripMenuItem.Text = "Back Color";
+            this.backColorToolStripMenuItem.Click += new System.EventHandler(this.backColorToolStripMenuItem_Click);
             // 
             // cellColorToolStripMenuItem
             // 
             this.cellColorToolStripMenuItem.Name = "cellColorToolStripMenuItem";
-            this.cellColorToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.cellColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cellColorToolStripMenuItem.Text = "Cell Color";
+            this.cellColorToolStripMenuItem.Click += new System.EventHandler(this.cellColorToolStripMenuItem_Click);
             // 
             // gridColorToolStripMenuItem
             // 
             this.gridColorToolStripMenuItem.Name = "gridColorToolStripMenuItem";
-            this.gridColorToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.gridColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.gridColorToolStripMenuItem.Text = "Grid Color";
+            this.gridColorToolStripMenuItem.Click += new System.EventHandler(this.gridColorToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -367,8 +372,9 @@ namespace Frederick_Jim_GOL
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
@@ -378,14 +384,16 @@ namespace Frederick_Jim_GOL
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.resetToolStripMenuItem.Text = "Reset";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
+            this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -412,6 +420,7 @@ namespace Frederick_Jim_GOL
             this.newToolStripButton.Name = "newToolStripButton";
             this.newToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.newToolStripButton.Text = "&New";
+            this.newToolStripButton.Click += new System.EventHandler(this.newToolStripButton_Click);
             // 
             // openToolStripButton
             // 
@@ -421,6 +430,7 @@ namespace Frederick_Jim_GOL
             this.openToolStripButton.Name = "openToolStripButton";
             this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.openToolStripButton.Text = "&Open";
+            this.openToolStripButton.Click += new System.EventHandler(this.openToolStripButton_Click);
             // 
             // saveToolStripButton
             // 
@@ -430,6 +440,7 @@ namespace Frederick_Jim_GOL
             this.saveToolStripButton.Name = "saveToolStripButton";
             this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.saveToolStripButton.Text = "&Save";
+            this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
             // 
             // toolStripSeparator6
             // 
@@ -444,6 +455,7 @@ namespace Frederick_Jim_GOL
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripButton2
             // 
@@ -453,6 +465,7 @@ namespace Frederick_Jim_GOL
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // toolStripButton3
             // 
@@ -462,6 +475,7 @@ namespace Frederick_Jim_GOL
             this.toolStripButton3.Name = "toolStripButton3";
             this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // toolStripSeparator7
             // 
@@ -524,7 +538,7 @@ namespace Frederick_Jim_GOL
             this.viewToolStripMenuItem1,
             this.gameplayToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
             // 
             // colorToolStripMenuItem
             // 
@@ -537,50 +551,57 @@ namespace Frederick_Jim_GOL
             this.aliveNumberToolStripMenuItem,
             this.deadNumberToolStripMenuItem});
             this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
-            this.colorToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.colorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.colorToolStripMenuItem.Text = "Color";
             // 
             // backgroundColorToolStripMenuItem
             // 
             this.backgroundColorToolStripMenuItem.Name = "backgroundColorToolStripMenuItem";
-            this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.backgroundColorToolStripMenuItem.Text = "Background";
+            this.backgroundColorToolStripMenuItem.Click += new System.EventHandler(this.backgroundColorToolStripMenuItem_Click);
             // 
             // gridColorToolStripMenuItem1
             // 
             this.gridColorToolStripMenuItem1.Name = "gridColorToolStripMenuItem1";
-            this.gridColorToolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
+            this.gridColorToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.gridColorToolStripMenuItem1.Text = "Grid";
+            this.gridColorToolStripMenuItem1.Click += new System.EventHandler(this.gridColorToolStripMenuItem1_Click);
             // 
             // gridx10ColorToolStripMenuItem
             // 
             this.gridx10ColorToolStripMenuItem.Name = "gridx10ColorToolStripMenuItem";
-            this.gridx10ColorToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.gridx10ColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.gridx10ColorToolStripMenuItem.Text = "Gridx10";
+            this.gridx10ColorToolStripMenuItem.Click += new System.EventHandler(this.gridx10ColorToolStripMenuItem_Click);
             // 
             // hUDToolStripMenuItem2
             // 
             this.hUDToolStripMenuItem2.Name = "hUDToolStripMenuItem2";
-            this.hUDToolStripMenuItem2.Size = new System.Drawing.Size(148, 22);
+            this.hUDToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             this.hUDToolStripMenuItem2.Text = "HUD";
+            this.hUDToolStripMenuItem2.Click += new System.EventHandler(this.hUDToolStripMenuItem2_Click);
             // 
             // cellColorToolStripMenuItem1
             // 
             this.cellColorToolStripMenuItem1.Name = "cellColorToolStripMenuItem1";
-            this.cellColorToolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
+            this.cellColorToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.cellColorToolStripMenuItem1.Text = "Cell";
+            this.cellColorToolStripMenuItem1.Click += new System.EventHandler(this.cellColorToolStripMenuItem1_Click);
             // 
             // aliveNumberToolStripMenuItem
             // 
             this.aliveNumberToolStripMenuItem.Name = "aliveNumberToolStripMenuItem";
-            this.aliveNumberToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.aliveNumberToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aliveNumberToolStripMenuItem.Text = "Alive Number";
+            this.aliveNumberToolStripMenuItem.Click += new System.EventHandler(this.aliveNumberToolStripMenuItem_Click);
             // 
             // deadNumberToolStripMenuItem
             // 
             this.deadNumberToolStripMenuItem.Name = "deadNumberToolStripMenuItem";
-            this.deadNumberToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.deadNumberToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deadNumberToolStripMenuItem.Text = "Dead Number";
+            this.deadNumberToolStripMenuItem.Click += new System.EventHandler(this.deadNumberToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem1
             // 
@@ -590,32 +611,36 @@ namespace Frederick_Jim_GOL
             this.gridToolStripMenuItem1,
             this.gridx10ToolStripMenuItem1});
             this.viewToolStripMenuItem1.Name = "viewToolStripMenuItem1";
-            this.viewToolStripMenuItem1.Size = new System.Drawing.Size(127, 22);
+            this.viewToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.viewToolStripMenuItem1.Text = "View";
             // 
             // hudToolStripMenuItem1
             // 
             this.hudToolStripMenuItem1.Name = "hudToolStripMenuItem1";
-            this.hudToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
+            this.hudToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.hudToolStripMenuItem1.Text = "HUD";
+            this.hudToolStripMenuItem1.Click += new System.EventHandler(this.hudToolStripMenuItem1_Click);
             // 
             // neighborsCountToolStripMenuItem
             // 
             this.neighborsCountToolStripMenuItem.Name = "neighborsCountToolStripMenuItem";
-            this.neighborsCountToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.neighborsCountToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.neighborsCountToolStripMenuItem.Text = "Neighbor Count";
+            this.neighborsCountToolStripMenuItem.Click += new System.EventHandler(this.neighborsCountToolStripMenuItem_Click);
             // 
             // gridToolStripMenuItem1
             // 
             this.gridToolStripMenuItem1.Name = "gridToolStripMenuItem1";
-            this.gridToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
+            this.gridToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.gridToolStripMenuItem1.Text = "Grid";
+            this.gridToolStripMenuItem1.Click += new System.EventHandler(this.gridToolStripMenuItem1_Click);
             // 
             // gridx10ToolStripMenuItem1
             // 
             this.gridx10ToolStripMenuItem1.Name = "gridx10ToolStripMenuItem1";
-            this.gridx10ToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
+            this.gridx10ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.gridx10ToolStripMenuItem1.Text = "Gridx10";
+            this.gridx10ToolStripMenuItem1.Click += new System.EventHandler(this.gridx10ToolStripMenuItem1_Click);
             // 
             // gameplayToolStripMenuItem
             // 
@@ -623,20 +648,22 @@ namespace Frederick_Jim_GOL
             this.toroidalToolStripMenuItem1,
             this.finiteToolStripMenuItem1});
             this.gameplayToolStripMenuItem.Name = "gameplayToolStripMenuItem";
-            this.gameplayToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.gameplayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.gameplayToolStripMenuItem.Text = "Gameplay";
             // 
             // toroidalToolStripMenuItem1
             // 
             this.toroidalToolStripMenuItem1.Name = "toroidalToolStripMenuItem1";
-            this.toroidalToolStripMenuItem1.Size = new System.Drawing.Size(116, 22);
+            this.toroidalToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toroidalToolStripMenuItem1.Text = "Toroidal";
+            this.toroidalToolStripMenuItem1.Click += new System.EventHandler(this.toroidalToolStripMenuItem1_Click);
             // 
             // finiteToolStripMenuItem1
             // 
             this.finiteToolStripMenuItem1.Name = "finiteToolStripMenuItem1";
-            this.finiteToolStripMenuItem1.Size = new System.Drawing.Size(116, 22);
+            this.finiteToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.finiteToolStripMenuItem1.Text = "Finite";
+            this.finiteToolStripMenuItem1.Click += new System.EventHandler(this.finiteToolStripMenuItem1_Click);
             // 
             // Form1
             // 

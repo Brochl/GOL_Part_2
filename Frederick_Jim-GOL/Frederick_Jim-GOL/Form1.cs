@@ -202,7 +202,7 @@ namespace Frederick_Jim_GOL
             sketchPad = temp;
 
             // Increment generation count, then update the status strip
-            generations++; 
+            generations++;
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
 
             graphicsPanel1.Invalidate(); // IInvalidate the graphics panel
@@ -212,7 +212,7 @@ namespace Frederick_Jim_GOL
         private void Timer_Tick(object sender, EventArgs e)
         {
             NextGeneration();
-            
+
             if (generations >= toGenerations && toLoopStopper == false) // if generations is greater than or equal to toGenerations & we are going to a specific generation
             { timer.Enabled = false; toGenerations = 0; toLoopStopper = true; } // turn the timer off, set our destination to 0, & stop looking as we reached our destination
         }
@@ -339,7 +339,7 @@ namespace Frederick_Jim_GOL
 
                 // Toggle the cell's state
                 universe[(int)x, (int)y] = !universe[(int)x, (int)y];
-               
+
                 // Tell Windows you need to repaint
                 graphicsPanel1.Invalidate();
             }
@@ -517,56 +517,64 @@ namespace Frederick_Jim_GOL
         #region View Menu Options
         private void HUDToolStripMenuItem_Click(object sender, EventArgs e) // Toggle HUD Event
         {
-            if (hud == true) // if it is on turn it off
+            if (hud == true) // if it is on turn it off and remove the check
             {
                 hud = false;
+                HUDToolStripMenuItem.Checked = false;
                 graphicsPanel1.Invalidate();
             }
-            else // if it was off turn it on
+            else // if it was off turn it on and place the check
             {
                 hud = true;
+                HUDToolStripMenuItem.Checked = true;
                 graphicsPanel1.Invalidate();
             }
         }
 
         private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e) // Togglee Neighbor Count Event
         {
-            if (neighborCount == true) // if it is on turn it off
+            if (neighborCount == true) // if it is on turn it off and remove the check
             {
                 neighborCount = false;
+                neighborCountToolStripMenuItem.Checked = false;
                 graphicsPanel1.Invalidate();
             }
-            else // if it is off turn it on
+            else // if it is off turn it on and place the check
             {
                 neighborCount = true;
+                neighborCountToolStripMenuItem.Checked = true;
                 graphicsPanel1.Invalidate();
             }
         }
 
         private void gridToolStripMenuItem_Click(object sender, EventArgs e) // Toggle Grid Event
         {
-            if (grid == true) // if it is on turn it off
+            if (grid == true) // if it is on turn it off and remove the check
             {
                 grid = false;
+                gridToolStripMenuItem.Checked = false;
                 graphicsPanel1.Invalidate();
             }
-            else // if it was off turn it on
+            else // if it was off turn it on and add the check
             {
                 grid = true;
+                gridToolStripMenuItem.Checked = true;
                 graphicsPanel1.Invalidate();
             }
         }
 
         private void gridX10ToolStripMenuItem_Click(object sender, EventArgs e) // Toggle gridx10 Event
         {
-            if (gridx10 == true) // if it is on turn it off
+            if (gridx10 == true) // if it is on turn it off and remove the check
             {
                 gridx10 = false;
+                gridX10ToolStripMenuItem.Checked = false;
                 graphicsPanel1.Invalidate();
             }
-            else // if it was off turn it on
+            else // if it was off turn it on and add the check
             {
                 gridx10 = true;
+                gridX10ToolStripMenuItem.Checked = false;
                 graphicsPanel1.Invalidate();
             }
         }
@@ -627,7 +635,566 @@ namespace Frederick_Jim_GOL
         #endregion
 
         #region Randomize Menu Options
+        private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e) // From Seed Event
+        {
+            RandomFromSeed dlg = new RandomFromSeed();
+            dlg.SetSeed(seed);
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                for (int y = 0; y < universe.GetLength(1); y++) // Iterate through the universe in the y, top to bottom
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++) // Iterate through the universe in the x, left to right
+                    {
+                        if (universe[x, y] != false) universe[x, y] = false; // Clean the universe 
+                    }
+                }
+
+                seed = dlg.GetSeed();             // Getting the seed from the dialog window
+                Random rand = new Random(seed);  // Getting a random number generator based on our seed
+                int temp = 0;                   // Temporary int to store our random number
+
+                for (int y = 0; y < universe.GetLength(1); y++) // loop through the universe through the y
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++) // loop through the universe through the x
+                    {
+                        temp = rand.Next(0, 2); // getting a random number between 0 and 2 to get roughly 1/3 alive
+
+                        if (temp == 0) universe[x, y] = true; // if we roll a 0 this cell lives
+                    }
+                }
+
+                // reset the generation counter and update script
+                generations = 0;
+                toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+
+                toolStripStatusLabelSeed.Text = "Seed = " + seed.ToString(); // show the new seed
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void fromCurrentSeedToolStripMenuItem_Click(object sender, EventArgs e) // From Current Seed Event
+        {
+            for (int y = 0; y < universe.GetLength(1); y++) // Iterate through the universe in the y, top to bottom
+            {
+                for (int x = 0; x < universe.GetLength(0); x++) // Iterate through the universe in the x, left to right
+                {
+                    if (universe[x, y] != false) universe[x, y] = false; // Clean the universe 
+                }
+            }
+
+            Random rand = new Random(seed); // creating a random generator using our seed
+            int temp = 0;                   // create a temporary int to store our random number
+
+            for (int y = 0; y < universe.GetLength(1); y++) // loop through the universe through the y
+            {
+                for (int x = 0; x < universe.GetLength(0); x++) // loop through the universe through the x
+                {
+                    temp = rand.Next(0, 2); // getting a random number between 0 and 2 to get roughly 1/3 alive
+
+                    if (temp == 0) { universe[x, y] = true; alive++; } // if we roll a 0 this cell lives and add one person
+                }
+            }
+
+            generations = 0;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString(); // Update status strip generations
+
+            toolStripStatusLabelSeed.Text = "Seed = " + seed.ToString(); // show the new seed
+            graphicsPanel1.Invalidate();
+        }
+
+        private void fromTimeToolStripMenuItem_Click(object sender, EventArgs e) // From Time Event
+        {
+            for (int y = 0; y < universe.GetLength(1); y++) // Iterate through the universe in the y, top to bottom
+            {
+                for (int x = 0; x < universe.GetLength(0); x++) // Iterate through the universe in the x, left to right
+                {
+                    if (universe[x, y] != false) universe[x, y] = false; // Clean the universe 
+                }
+            }
+
+            Random rand = new Random(); // create a random number generator from time
+            int temp = 0;              // create a temporary int to store our random number
+            seed = 404;               // set seed to 404 as you can't get the seed from time
+
+            for (int y = 0; y < universe.GetLength(1); y++) // loop through the universe through the y
+            {
+                for (int x = 0; x < universe.GetLength(0); x++) // loop through the universe through the x
+                {
+                    temp = rand.Next(0, 2); // getting a random number between 0 and 2 to get roughly 1/3 alive
+
+                    if (temp == 0) universe[x, y] = true; // if we roll a 0 this cell lives
+                }
+            }
+
+            generations = 0;  // set generations to 0
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString(); // Update status strip generations
+
+            toolStripStatusLabelSeed.Text = "Seed = " + seed.ToString(); // show the new seed
+            graphicsPanel1.Invalidate();
+        }
+        #endregion
+
+        #region Settings Menu Options
+        private void backColorToolStripMenuItem_Click(object sender, EventArgs e) // Background Color Event
+        {
+            ColorDialog dlg = new ColorDialog(); // create a color dialog box
+            dlg.Color = backgroundColor;        // setting the selected color to background color
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                backgroundColor = dlg.Color;     // set the background color to the selected color
+                graphicsPanel1.BackColor = backgroundColor; // apply the color change
+                graphicsPanel1.Invalidate();    // invalidate the panel
+            }
+        }
+
+        private void cellColorToolStripMenuItem_Click(object sender, EventArgs e) // Cell Color Event
+        {
+            ColorDialog dlg = new ColorDialog();   // create a color dialog box
+            dlg.Color = cellColor;                // setting the selected color to the cell color
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                cellColor = dlg.Color;        // set the cellColor to the selected color
+                graphicsPanel1.Invalidate(); // invalidate the panel
+            }
+        }
+
+        private void gridColorToolStripMenuItem_Click(object sender, EventArgs e) // Grid Color Event
+        {
+            ColorDialog dlg = new ColorDialog(); // create a color dialog box
+            dlg.Color = gridColor;          // setting the selected color to the gridColor
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                gridColor = dlg.Color;      // set the grid color to the selected color
+                graphicsPanel1.Invalidate(); // invalidate the panel
+            }
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e) // Options Event
+        {
+            Options dlg = new Options(); // create an Options dialog
+
+            dlg.SetWidth(worldX);        // set the width to the width of the world
+            dlg.SetHeight(worldY);       // set the height to the height of the world
+            dlg.SetIntervals(intervals); // set the intervals to the speed of the game
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                worldX = dlg.GetWidth();         // set the world width to the width value
+                worldY = dlg.GetHeight();        // set the world height to the height value
+                intervals = dlg.GetIntervals();  // set the intervals to the intervals value
+
+                if (universe.GetLength(0) != worldX || universe.GetLength(1) != worldY) // if the universe's width and height has been changed
+                {
+                    universe = new bool[worldX, worldY];    // recreate the universe with the new size
+                    sketchPad = new bool[worldX, worldY];   // recreate the sketchPad with the new size
+                    generations = 0;                        // reset generations to 0
+                    toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString(); // Update status strip generations
+                }
+
+                if (timer.Interval != intervals)     // if the intervals have changed
+                {
+                    timer.Interval = intervals;      // set the timer to our new intervals
+                    toolStripStatusLabelIntervals.Text = "Intervals = " + intervals.ToString(); // update how long it takes for the timer to tick
+                }
+                graphicsPanel1.Invalidate(); // invalidate the panel
+            }
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e) // Reset Event
+        {
+            // resetting the properties
+            Properties.Settings.Default.Reset();
+
+            hud = Properties.Settings.Default.hud;
+            grid = Properties.Settings.Default.grid;
+            gridx10 = Properties.Settings.Default.gridx10;
+            neighborCount = Properties.Settings.Default.neighborCount;
+            gameMode = Properties.Settings.Default.gameMode;
+            timerSwitch = Properties.Settings.Default.timerSwitch;
+
+            gridColor = Properties.Settings.Default.gridColor;
+            gridx10Color = Properties.Settings.Default.gridx10Color;
+            cellColor = Properties.Settings.Default.cellColor;
+            backgroundColor = Properties.Settings.Default.backgroundColor;
+            hudColor = Properties.Settings.Default.hudColor;
+            deadCell = Properties.Settings.Default.deadCell;
+            aliveCell = Properties.Settings.Default.aliveCell;
+
+            intervals = Properties.Settings.Default.intervals;
+            worldX = Properties.Settings.Default.worldX;
+            worldY = Properties.Settings.Default.worldY;
+            seed = Properties.Settings.Default.seed;
+
+            // setting the background color
+            graphicsPanel1.BackColor = backgroundColor;
+
+            // update intervals and seed toolstrip
+            toolStripStatusLabelIntervals.Text = "Intervals = " + intervals.ToString();
+            toolStripStatusLabelSeed.Text = "Seed = " + seed.ToString();
+
+            // then invalidate the panel
+            graphicsPanel1.Invalidate();
+        }
+
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e) // Reload Event
+        {
+            // reloading the properties
+            Properties.Settings.Default.Reload();
+
+            hud = Properties.Settings.Default.hud;
+            grid = Properties.Settings.Default.grid;
+            gridx10 = Properties.Settings.Default.gridx10;
+            neighborCount = Properties.Settings.Default.neighborCount;
+            gameMode = Properties.Settings.Default.gameMode;
+            timerSwitch = Properties.Settings.Default.timerSwitch;
+
+            gridColor = Properties.Settings.Default.gridColor;
+            gridx10Color = Properties.Settings.Default.gridx10Color;
+            cellColor = Properties.Settings.Default.cellColor;
+            backgroundColor = Properties.Settings.Default.backgroundColor;
+            hudColor = Properties.Settings.Default.hudColor;
+            deadCell = Properties.Settings.Default.deadCell;
+            aliveCell = Properties.Settings.Default.aliveCell;
+
+            intervals = Properties.Settings.Default.intervals;
+            worldX = Properties.Settings.Default.worldX;
+            worldY = Properties.Settings.Default.worldY;
+            seed = Properties.Settings.Default.seed;
+
+            // setting the background color
+            graphicsPanel1.BackColor = backgroundColor;
+
+            // update intervals and seed toolstrip
+            toolStripStatusLabelIntervals.Text = "Intervals = " + intervals.ToString();
+            toolStripStatusLabelSeed.Text = "Seed = " + seed.ToString();
+
+            // then invalidate the panel
+            graphicsPanel1.Invalidate();
+        }
+        #endregion
+
+        #region ToolStrip Button Options
+        private void newToolStripButton_Click(object sender, EventArgs e) // New Event
+        {
+            for (int y = 0; y < universe.GetLength(1); y++) // Iterate through the universe in the y, top to bottom
+            {
+                for (int x = 0; x < universe.GetLength(0); x++) // Iterate through the universe in the x, left to right
+                {
+                    if (universe[x, y] != false) universe[x, y] = false; // Clean the universe 
+                }
+            }
+
+            generations = 0; // set generations back to zero
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString(); // Update status strip generations
+
+            graphicsPanel1.Invalidate(); // Invalidate to repaint everything
+        }
+
+        private void openToolStripButton_Click(object sender, EventArgs e) // Open Event
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "All Files|*.*|Cells|*.cells";
+            dlg.FilterIndex = 2;
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                StreamReader reader = new StreamReader(dlg.FileName);
+
+                fileName = dlg.FileName; // store the latest file name to use for save function
+
+                // Create a couple variables to calculate the width, height, and y position
+                // of the data in the file.
+                int maxWidth = 0;
+                int maxHeight = 0;
+                int yPos = 0;
+
+                // Iterate through the file once to get its size.
+                while (!reader.EndOfStream)
+                {
+                    // Read one row at a time.
+                    string row = reader.ReadLine();
+
+                    // If the row begins with '!' then it is a comment
+                    if (row.StartsWith("!")) continue; // and should be ignored.
+
+                    // If the row is not a comment then it is a row of cells.
+                    else if (!row.StartsWith("!")) maxHeight++; // Increment the maxHeight variable for each row read.
+
+                    // Get the length of the current row string
+                    maxWidth = row.Length; // and adjust the maxWidth variable if necessary.
+                }
+                // Resize the current universe and scratchPad
+                // to the width and height of the file calculated above.
+                universe = new bool[maxWidth, maxHeight];
+                sketchPad = new bool[maxWidth, maxHeight];
+
+                // Reset the file pointer back to the beginning of the file.
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+
+                // Iterate through the file again, this time reading in the cells.
+                while (!reader.EndOfStream)
+                {
+                    // Read one row at a time.
+                    string row = reader.ReadLine();
+
+                    // If the row begins with '!' then it is a comment
+                    if (row.StartsWith("!")) continue; // and should be ignored.
+
+                    // If the row is not a comment then 
+                    // it is a row of cells and needs to be iterated through.
+                    for (int xPos = 0; xPos < row.Length; xPos++)
+                    {
+                        // If row[xPos] is a 'O' (capital O) then
+                        // set the corresponding cell in the universe to alive.
+                        if (row[xPos] == 'O') { sketchPad[xPos, yPos] = true; alive++; }
+
+                        // If row[xPos] is a '.' (period) then
+                        // set the corresponding cell in the universe to dead.
+                        else if (row[xPos] == '.') sketchPad[xPos, yPos] = false;
+                    }
+
+                    yPos++; // move on to the next row
+                }
+
+                // Close the file.
+                reader.Close();
+
+                // copy the sketchPad to universe then invalidate the panel
+                bool[,] temp = universe;
+                universe = sketchPad;
+                sketchPad = temp;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void saveToolStripButton_Click(object sender, EventArgs e) // save tool strip button
+        {
+            StreamWriter writer = new StreamWriter(fileName);
+
+            // Write any comments you want to include first.
+            // Prefix all comment strings with an exclamation point.
+            // Use WriteLine to write the strings to the file. 
+            // It appends a CRLF for you.
+            writer.WriteLine($"!{DateTime.Now}");
+
+            // Iterate through the universe one row at a time.
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+
+                String currentRow = string.Empty; // Create a string to represent the current row.
+
+                for (int x = 0; x < universe.GetLength(0); x++)  // Iterate through the current row one cell at a time.
+                {
+                    if (universe[x, y] == true) currentRow += 'O';        // Alive == Os
+                    else if (universe[x, y] == false) currentRow += '.';  // Dead == .s
+                }
+
+                // Once the current row has been read through and the 
+                // string constructed then write it to the file using WriteLine.
+                writer.WriteLine(currentRow);
+            }
+
+            // After all rows and columns have been written then close the file.
+            writer.Close();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e) // Play Event
+        {
+            toolStripButton1.Enabled = false;
+            toolStripButton2.Enabled = true;
+            toolStripButton3.Enabled = false;
+            timer.Enabled = true;
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e) // Pause Event
+        {
+            toolStripButton1.Enabled = true;
+            toolStripButton2.Enabled = false;
+            toolStripButton3.Enabled = true;
+            timer.Enabled = false;
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e) // Next Event
+        {
+            NextGeneration();
+        }
 
         #endregion
+
+        #region Context Menu Strip (Color)
+        private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e) // Background 
+        {
+            ColorDialog dlg = new ColorDialog(); // create a color dialog box
+            dlg.Color = backgroundColor;        // setting the selected color to background color
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                backgroundColor = dlg.Color;     // set the background color to the selected color
+                graphicsPanel1.BackColor = backgroundColor; // apply the color change
+                graphicsPanel1.Invalidate();    // invalidate the panel
+            }
+        }
+
+        private void gridColorToolStripMenuItem1_Click(object sender, EventArgs e) // Grid 
+        {
+            ColorDialog dlg = new ColorDialog(); // create a color dialog box
+            dlg.Color = gridColor;              // setting the selected color to grid color
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                gridColor = dlg.Color;              // set the grid color to the selected color
+                graphicsPanel1.Invalidate();        // invalidate the panel
+            }
+        }
+
+        private void gridx10ColorToolStripMenuItem_Click(object sender, EventArgs e) // Gridx10 
+        {
+            ColorDialog dlg = new ColorDialog(); // create a color dialog box
+            dlg.Color = gridx10Color;              // setting the selected color to gridx10 color
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                gridx10Color = dlg.Color;            // set the grid color to the selected color
+                graphicsPanel1.Invalidate();        // invalidate the panel
+            }
+        }
+
+        private void hUDToolStripMenuItem2_Click(object sender, EventArgs e) // HUD 
+        {
+            ColorDialog dlg = new ColorDialog(); // create a color dialog box
+            dlg.Color = hudColor;              // setting the selected color to hud color
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                hudColor = dlg.Color;            // set the hud color to the selected color
+                graphicsPanel1.Invalidate();        // invalidate the panel
+            }
+        }
+
+        private void cellColorToolStripMenuItem1_Click(object sender, EventArgs e) // Cell 
+        {
+            ColorDialog dlg = new ColorDialog(); // create a color dialog box
+            dlg.Color = cellColor;              // setting the selected color to cell color
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                cellColor = dlg.Color;            // set the cell color to the selected color
+                graphicsPanel1.Invalidate();        // invalidate the panel
+            }
+        }
+
+        private void aliveNumberToolStripMenuItem_Click(object sender, EventArgs e) // Alive 
+        {
+            ColorDialog dlg = new ColorDialog(); // create a color dialog box
+            dlg.Color = aliveCell;              // setting the selected color to alive color
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                aliveCell = dlg.Color;            // set the alive color to the selected color
+                graphicsPanel1.Invalidate();        // invalidate the panel
+            }
+        }
+
+        private void deadNumberToolStripMenuItem_Click(object sender, EventArgs e) // Dead 
+        {
+            ColorDialog dlg = new ColorDialog(); // create a color dialog box
+            dlg.Color = aliveCell;              // setting the selected color to dead color
+
+            if (DialogResult.OK == dlg.ShowDialog()) // if the result == accept
+            {
+                aliveCell = dlg.Color;            // set the dead color to the selected color
+                graphicsPanel1.Invalidate();        // invalidate the panel
+            }
+        }
+        #endregion
+
+        #region Context Menu Strip (View)
+        private void hudToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (hud == true) // if it is on turn it off and remove the check
+            {
+                hud = false;
+                HUDToolStripMenuItem.Checked = false;
+                graphicsPanel1.Invalidate();
+            }
+            else // if it was off turn it on and place the check
+            {
+                hud = true;
+                HUDToolStripMenuItem.Checked = true;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void neighborsCountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (neighborCount == true) // if it is on turn it off and remove the check
+            {
+                neighborCount = false;
+                neighborCountToolStripMenuItem.Checked = false;
+                graphicsPanel1.Invalidate();
+            }
+            else // if it is off turn it on and place the check
+            {
+                neighborCount = true;
+                neighborCountToolStripMenuItem.Checked = true;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void gridToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (grid == true) // if it is on turn it off and remove the check
+            {
+                grid = false;
+                gridToolStripMenuItem.Checked = false;
+                graphicsPanel1.Invalidate();
+            }
+            else // if it was off turn it on and add the check
+            {
+                grid = true;
+                gridToolStripMenuItem.Checked = true;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void gridx10ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (gridx10 == true) // if it is on turn it off and remove the check
+            {
+                gridx10 = false;
+                gridX10ToolStripMenuItem.Checked = false;
+                graphicsPanel1.Invalidate();
+            }
+            else // if it was off turn it on and add the check
+            {
+                gridx10 = true;
+                gridX10ToolStripMenuItem.Checked = false;
+                graphicsPanel1.Invalidate();
+            }
+        }
+        #endregion
+
+        #region Context Menu Strip (Gameplay)
+        private void toroidalToolStripMenuItem1_Click(object sender, EventArgs e) // Toroidal 
+        {
+            gameMode = true;                          // set the border mode to toroidal
+            finiteToolStripMenuItem.Checked = false; // uncheck finite
+            toroidalToolStripMenuItem.Checked = true; // check toroidal
+            graphicsPanel1.Invalidate(); // Don't forget always repaint
+        }
+
+        private void finiteToolStripMenuItem1_Click(object sender, EventArgs e) // Finite 
+        {
+            gameMode = false;                           // set the border mode to finite
+            toroidalToolStripMenuItem.Checked = false; // uncheck toroidal
+            finiteToolStripMenuItem.Checked = true; // check finite
+            graphicsPanel1.Invalidate(); // ALWAYS repaint
+        }
+        #endregion
+
     }
 }

@@ -19,12 +19,12 @@ namespace Frederick_Jim_GOL
 
         public int GetGenerationJump()
         {
-            return (int)numericUpDown1.Value;
+            return (int)numericUpDown1.Value; // returning the generation selected
         }
 
         public void SetGenerationStart(int number)
         {
-            numericUpDown1.Value = number;
+            numericUpDown1.Value = number; // set the numericUpDown to the current generation
         }
     }
 }
