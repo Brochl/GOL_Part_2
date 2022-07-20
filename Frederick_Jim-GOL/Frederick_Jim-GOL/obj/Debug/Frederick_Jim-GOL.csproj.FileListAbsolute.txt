@@ -11,3 +11,17 @@ C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug
 C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.Options.resources
 C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.RandomFromSeed.resources
 C:\Users\nkjmc\Desktop\New GOL\GOL\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.To.resources
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\bin\Debug\Frederick_Jim-GOL.exe.config
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\bin\Debug\Frederick_Jim-GOL.exe
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\bin\Debug\Frederick_Jim-GOL.pdb
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.csproj.AssemblyReference.cache
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.csproj.SuggestedBindingRedirects.cache
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.Form1.resources
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.Options.resources
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.Properties.Resources.resources
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.RandomFromSeed.resources
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim_GOL.To.resources
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.csproj.GenerateResource.cache
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.csproj.CoreCompileInputs.cache
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.exe
+M:\Repos\GOL_Part_2\Frederick_Jim-GOL\Frederick_Jim-GOL\obj\Debug\Frederick_Jim-GOL.pdb

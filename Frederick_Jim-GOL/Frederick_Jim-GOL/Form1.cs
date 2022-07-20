@@ -110,6 +110,76 @@ namespace Frederick_Jim_GOL
         }
         #endregion
 
+        #region Save methods
+        private void SaveAs()
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "All Files|*.*|Cells|*.cells";
+            dlg.FilterIndex = 2; dlg.DefaultExt = "cells";
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                StreamWriter writer = new StreamWriter(dlg.FileName);
+
+                // Write any comments you want to include first.
+                // Prefix all comment strings with an exclamation point.
+                // Use WriteLine to write the strings to the file. 
+                // It appends a CRLF for you.
+                writer.WriteLine($"!{DateTime.Now}");
+
+                // Iterate through the universe one row at a time.
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+
+                    String currentRow = string.Empty; // Create a string to represent the current row.
+
+                    for (int x = 0; x < universe.GetLength(0); x++)  // Iterate through the current row one cell at a time.
+                    {
+                        if (universe[x, y] == true) currentRow += 'O';         // Alive cells == Os
+                        else if (universe[x, y] == false) currentRow += '.';   // Dead cells == .s
+                    }
+
+                    // Once the current row has been read through and the 
+                    // string constructed then write it to the file using WriteLine.
+                    writer.WriteLine(currentRow);
+                }
+
+                // After all rows and columns have been written then close the file.
+                writer.Close();
+            }
+        }
+
+        private void Save()
+        {
+            StreamWriter writer = new StreamWriter(fileName);
+
+            // Write any comments you want to include first.
+            // Prefix all comment strings with an exclamation point.
+            // Use WriteLine to write the strings to the file. 
+            // It appends a CRLF for you.
+            writer.WriteLine($"!{DateTime.Now}");
+
+            // Iterate through the universe one row at a time.
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+
+                String currentRow = string.Empty; // Create a string to represent the current row.
+
+                for (int x = 0; x < universe.GetLength(0); x++)  // Iterate through the current row one cell at a time.
+                {
+                    if (universe[x, y] == true) currentRow += 'O';        // Alive == Os
+                    else if (universe[x, y] == false) currentRow += '.';  // Dead == .s
+                }
+
+                // Once the current row has been read through and the 
+                // string constructed then write it to the file using WriteLine.
+                writer.WriteLine(currentRow);
+            }
+
+            // After all rows and columns have been written then close the file.
+            writer.Close();
+        }
+        #endregion
         public Form1()
         {
             InitializeComponent();
@@ -440,72 +510,15 @@ namespace Frederick_Jim_GOL
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e) // Save Event
         {
-            StreamWriter writer = new StreamWriter(fileName);
-
-            // Write any comments you want to include first.
-            // Prefix all comment strings with an exclamation point.
-            // Use WriteLine to write the strings to the file. 
-            // It appends a CRLF for you.
-            writer.WriteLine($"!{DateTime.Now}");
-
-            // Iterate through the universe one row at a time.
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
-
-                String currentRow = string.Empty; // Create a string to represent the current row.
-
-                for (int x = 0; x < universe.GetLength(0); x++)  // Iterate through the current row one cell at a time.
-                {
-                    if (universe[x, y] == true) currentRow += 'O';        // Alive cells == 0
-                    else if (universe[x, y] == false) currentRow += '.';  // Dead cells == .
-                }
-
-                // Once the current row has been read through and the 
-                // string constructed then write it to the file using WriteLine.
-                writer.WriteLine(currentRow);
-            }
-
-            // After all rows and columns have been written then close the file.
-            writer.Close();
+            if (fileName != null) // if there is a file name then save it
+                Save();
+            else                  // otherwise save as
+                SaveAs();
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e) // Save As Event
         {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter = "All Files|*.*|Cells|*.cells";
-            dlg.FilterIndex = 2; dlg.DefaultExt = "cells";
-
-
-            if (DialogResult.OK == dlg.ShowDialog())
-            {
-                StreamWriter writer = new StreamWriter(dlg.FileName);
-
-                // Write any comments you want to include first.
-                // Prefix all comment strings with an exclamation point.
-                // Use WriteLine to write the strings to the file. 
-                // It appends a CRLF for you.
-                writer.WriteLine($"!{DateTime.Now}");
-
-                // Iterate through the universe one row at a time.
-                for (int y = 0; y < universe.GetLength(1); y++)
-                {
-
-                    String currentRow = string.Empty; // Create a string to represent the current row.
-
-                    for (int x = 0; x < universe.GetLength(0); x++)  // Iterate through the current row one cell at a time.
-                    {
-                        if (universe[x, y] == true) currentRow += 'O';         // Alive cells == Os
-                        else if (universe[x, y] == false) currentRow += '.';   // Dead cells == .s
-                    }
-
-                    // Once the current row has been read through and the 
-                    // string constructed then write it to the file using WriteLine.
-                    writer.WriteLine(currentRow);
-                }
-
-                // After all rows and columns have been written then close the file.
-                writer.Close();
-            }
+            SaveAs();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) // Exit Event
@@ -973,48 +986,25 @@ namespace Frederick_Jim_GOL
 
         private void saveToolStripButton_Click(object sender, EventArgs e) // save tool strip button
         {
-            StreamWriter writer = new StreamWriter(fileName);
-
-            // Write any comments you want to include first.
-            // Prefix all comment strings with an exclamation point.
-            // Use WriteLine to write the strings to the file. 
-            // It appends a CRLF for you.
-            writer.WriteLine($"!{DateTime.Now}");
-
-            // Iterate through the universe one row at a time.
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
-
-                String currentRow = string.Empty; // Create a string to represent the current row.
-
-                for (int x = 0; x < universe.GetLength(0); x++)  // Iterate through the current row one cell at a time.
-                {
-                    if (universe[x, y] == true) currentRow += 'O';        // Alive == Os
-                    else if (universe[x, y] == false) currentRow += '.';  // Dead == .s
-                }
-
-                // Once the current row has been read through and the 
-                // string constructed then write it to the file using WriteLine.
-                writer.WriteLine(currentRow);
-            }
-
-            // After all rows and columns have been written then close the file.
-            writer.Close();
+            if (fileName != null) // if there is a file name then save it
+                Save();
+            else                  // otherwise save as
+                SaveAs();
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e) // Play Event
         {
-            toolStripButton1.Enabled = false;
-            toolStripButton2.Enabled = true;
-            toolStripButton3.Enabled = false;
+            toolStripButton1.Enabled = false; // play == off
+            toolStripButton2.Enabled = true;  // pause == on
+            toolStripButton3.Enabled = false; // next == off
             timer.Enabled = true;
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e) // Pause Event
         {
-            toolStripButton1.Enabled = true;
-            toolStripButton2.Enabled = false;
-            toolStripButton3.Enabled = true;
+            toolStripButton1.Enabled = true;  // play == on
+            toolStripButton2.Enabled = false; // pause == off
+            toolStripButton3.Enabled = true;  // next == off
             timer.Enabled = false;
         }
 
